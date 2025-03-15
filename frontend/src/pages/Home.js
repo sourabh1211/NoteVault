@@ -14,7 +14,7 @@ const Home = () => {
   const [deleteNote, setDeleteNote] = useState(null);
 
   let getNotes = () => {
-    fetch("http://localhost:8000/getNotes", {
+    fetch("http://localhost:5000/getNotes", {
       mode: "cors",
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -28,7 +28,7 @@ const Home = () => {
   };
 
   function getUserDetails() {
-    fetch("http://localhost:8000/getUserDetails", {
+    fetch("http://localhost:5000/getUserDetails", {
       mode: "cors",
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -49,7 +49,7 @@ const Home = () => {
   const handleDelete = () => {
     if (!deleteNote) return;
 
-    fetch("http://localhost:8000/deleteNote", {
+    fetch("http://localhost:5000/deleteNote", {
       mode: "cors",
       method: "POST",
       headers: {
