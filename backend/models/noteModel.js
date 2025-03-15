@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
-
 mongoose.connect("mongodb+srv://Sourabh:sourabh112002@noteapp.4h5mp.mongodb.net/noteApp?retryWrites=true&w=majority&appName=NoteApp");
-
 const notesSchema = new mongoose.Schema({
   title: String,
   description: String,
@@ -13,7 +11,5 @@ const notesSchema = new mongoose.Schema({
     default: Date.now
   }
 });
-
 mongoose.model("Notes", notesSchema);
-
 module.exports = mongoose.model("Notes")
