@@ -12,7 +12,7 @@ const Profile = () => {
   const [deleteNote, setDeleteNote] = useState(null);
   const navigate = useNavigate();
   function getUserDetails() {
-    fetch("http://localhost:8000/getUserDetails", {
+    fetch("http://localhost:5000/getUserDetails", {
       mode: "cors",
       method: "POST",
       headers: {
@@ -25,7 +25,7 @@ const Profile = () => {
       .catch(error => console.error("Error fetching user details:", error));
   }
   function getNotes() {
-    fetch("http://localhost:8000/getNotes", {
+    fetch("http://localhost:5000/getNotes", {
       mode: "cors",
       method: "POST",
       headers: {
@@ -57,7 +57,7 @@ const Profile = () => {
   }, []);
   const handleDelete = () => {
     if (!deleteNote) return;
-    fetch("http://localhost:8000/deleteNote", {
+    fetch("http://localhost:5000/deleteNote", {
       mode: "cors",
       method: "POST",
       headers: {
