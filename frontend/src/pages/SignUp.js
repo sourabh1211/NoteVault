@@ -10,7 +10,7 @@ const SignUp = () => {
   let navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let res = await fetch('http://localhost:8000/signUp', {
+    let res = await fetch('http://localhost:5000/signUp', {
       mode: 'cors',
       method: 'POST',
       headers: {
