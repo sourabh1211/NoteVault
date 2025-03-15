@@ -5,19 +5,15 @@ import Fotter from '../components/Fotter';
 import Oops from '../components/Oops';
 import oopsImg from "../Images/oops2.png";
 import { useSearchParams } from 'react-router-dom';
-
 const SearchPage = () => {
   const [searchParams] = useSearchParams();
   const myParam = searchParams.get('query');
-
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [error, setError] = useState("");
-
   useEffect(() => {
     getNotes();
   }, []);
-
   useEffect(() => {
     if (data.length > 0 && myParam) {
       const filtered = data.filter(note => 
@@ -31,7 +27,6 @@ const SearchPage = () => {
       setFilteredData([]);
     }
   }, [data, myParam]);
-
   const getNotes = () => {
     fetch("http://localhost:8000/getNotes", {
       mode: "cors",
@@ -49,7 +44,7 @@ const SearchPage = () => {
         setError(responseData.msg);
       } else {
         console.log('Fetched Data:', responseData);
-        setData(responseData);  // Directly using the array of notes
+        setData(responseData);
       }
     })
     .catch(error => {
@@ -81,5 +76,4 @@ const SearchPage = () => {
     </>
   );
 };
-
 export default SearchPage;
