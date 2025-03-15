@@ -28,7 +28,7 @@ const SearchPage = () => {
     }
   }, [data, myParam]);
   const getNotes = () => {
-    fetch("http://localhost:8000/getNotes", {
+    fetch("http://localhost:5000/getNotes", {
       mode: "cors",
       method: "POST",
       headers: {
