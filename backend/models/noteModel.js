@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.connect("mongodb+srv://Sourabh:sourabh112002@noteapp.4h5mp.mongodb.net/noteApp?retryWrites=true&w=majority&appName=NoteApp");
+mongoose.connect("mongodb://127.0.0.1:27017/noteApp");
 const notesSchema = new mongoose.Schema({
   title: String,
   description: String,
