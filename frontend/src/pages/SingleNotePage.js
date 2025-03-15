@@ -3,13 +3,11 @@ import Navbar from '../components/Navbar';
 import Fotter from '../components/Fotter';
 import { useNavigate, useParams } from 'react-router-dom';
 import parse from 'html-react-parser';
-
 const SingleNotePage = () => {
   let { id } = useParams();
   const [data, setData] = useState(null);
   const [deleteNote, setDeleteNote] = useState(null);
   const navigate = useNavigate();
-
   function getNote() {
     fetch("http://localhost:8000/getNote", {
       mode: "cors",
@@ -24,7 +22,6 @@ const SingleNotePage = () => {
   const editNote = () => {
     navigate(`/editNote/${id}`);
   };
-
   const handleDelete = () => {
     if (!deleteNote) return;
 
@@ -45,7 +42,6 @@ const SingleNotePage = () => {
       })
       .catch(err => console.log(err));
   };
-
   useEffect(() => {
     getNote();
   }, []);
@@ -68,13 +64,11 @@ const SingleNotePage = () => {
             <img className='w-[35px] h-[35px] cursor-pointer' onClick={editNote} src={require("../Images/edit.png")} alt="" />
           </div>
         </div>
-
         <p className='text-gray'>{data ? data.description : ""}</p>
         <div className='my-3 w-full'>
           {parse(data ? data.content : "")}
         </div>
       </div>
-
       {deleteNote && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 backdrop-blur-md z-[99999]">
           <div className="bg-white rounded-lg shadow-lg p-5 w-[28vw] h-auto text-center">
@@ -87,8 +81,7 @@ const SingleNotePage = () => {
             <div className="flex justify-center gap-2 mt-4">
               <button 
                 onClick={handleDelete}
-                className="w-[45%] py-2 bg-[#f55757] text-white rounded-md font-medium"
-              >
+                className="w-[45%] py-2 bg-[#f55757] text-white rounded-md font-medium">
                 Delete
               </button>
               <button 
@@ -105,5 +98,4 @@ const SingleNotePage = () => {
     </>
   );
 };
-
 export default SingleNotePage;
