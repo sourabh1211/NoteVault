@@ -16,7 +16,7 @@ const AddNote = () => {
 
   const submitForm = (e) => {
     e.preventDefault();
-    let res = fetch("http://localhost:8000/addNote",{
+    let res = fetch("http://localhost:5000/addNote",{
       mode:"cors",
       method:"POST",
       headers:{"Content-Type":"application/json"},
