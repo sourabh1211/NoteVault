@@ -4,7 +4,6 @@ import Note from '../components/Note';
 import Fotter from '../components/Fotter';
 import { useNavigate } from 'react-router-dom';
 import Avatar from 'react-avatar';
-
 const Profile = () => {
   const [userDetails, setUserDetails] = useState(null);
   const [notes, setNotes] = useState([]);
@@ -12,7 +11,6 @@ const Profile = () => {
   const [normalNotes, setNormalNotes] = useState([]);
   const [deleteNote, setDeleteNote] = useState(null);
   const navigate = useNavigate();
-
   function getUserDetails() {
     fetch("http://localhost:8000/getUserDetails", {
       mode: "cors",
@@ -26,7 +24,6 @@ const Profile = () => {
       .then(data => setUserDetails(data))
       .catch(error => console.error("Error fetching user details:", error));
   }
-
   function getNotes() {
     fetch("http://localhost:8000/getNotes", {
       mode: "cors",
@@ -54,15 +51,12 @@ const Profile = () => {
         setNormalNotes([]);
       });
   }
-
   useEffect(() => {
     getUserDetails();
     getNotes();
   }, []);
-
   const handleDelete = () => {
     if (!deleteNote) return;
-
     fetch("http://localhost:8000/deleteNote", {
       mode: "cors",
       method: "POST",
@@ -82,7 +76,6 @@ const Profile = () => {
       })
       .catch(err => console.log(err));
   };
-
   return (
     <>
       <Navbar />
@@ -95,7 +88,6 @@ const Profile = () => {
           navigate("/login");
         }} className="mt-4 px-5 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600">Logout</button>
       </div>
-
       <div className='w-screen px-10 py-5'>
         <h3 className='text-3xl font-semibold text-center text-gray-700'>Your <span className="text-gray-600">Important</span> Notes</h3>
       </div>
@@ -104,7 +96,6 @@ const Profile = () => {
           <Note key={note._id} note={note} index={index} setDeleteNote={setDeleteNote} />
         )) : <p className="text-center text-gray-500">No important notes found.</p>}
       </div>
-
       <div className='w-screen px-10 py-5 mt-6'>
         <h3 className='text-3xl font-semibold text-center text-gray-700'>Your <span className="text-gray-600">Normal</span> Notes</h3>
       </div>
@@ -113,9 +104,7 @@ const Profile = () => {
           <Note key={note._id} note={note} index={index} setDeleteNote={setDeleteNote} />
         )) : <p className="text-center text-gray-500">No normal notes found.</p>}
       </div>
-
       <Fotter />
-
       {deleteNote && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 backdrop-blur-md z-[99999]">
           <div className="bg-white rounded-lg shadow-lg p-5 w-[28vw] h-auto text-center">
@@ -125,7 +114,6 @@ const Profile = () => {
             <p className="text-gray-600 text-[16px] my-2 leading-[1.5]">
               Do you want to delete this note?
             </p>
-
             <div className="flex justify-center gap-2 mt-4">
               <button 
                 onClick={handleDelete}
@@ -146,5 +134,4 @@ const Profile = () => {
     </>
   );
 };
-
 export default Profile;
