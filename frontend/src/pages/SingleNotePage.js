@@ -9,7 +9,7 @@ const SingleNotePage = () => {
   const [deleteNote, setDeleteNote] = useState(null);
   const navigate = useNavigate();
   function getNote() {
-    fetch("http://localhost:8000/getNote", {
+    fetch("http://localhost:5000/getNote", {
       mode: "cors",
       method: "POST",
       headers: { "content-type": "application/json" },
@@ -25,7 +25,7 @@ const SingleNotePage = () => {
   const handleDelete = () => {
     if (!deleteNote) return;
 
-    fetch("http://localhost:8000/deleteNote", {
+    fetch("http://localhost:5000/deleteNote", {
       mode: "cors",
       method: "POST",
       headers: { "Content-Type": "application/json" },
