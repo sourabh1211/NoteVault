@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import SignUpimg from '../Images/signupimg.jpg';
-
 const SignUp = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -9,10 +8,8 @@ const SignUp = () => {
   const [username, setUsername] = useState('');
   const [error, setError] = useState('');
   let navigate = useNavigate();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     let res = await fetch('http://localhost:8000/signUp', {
       mode: 'cors',
       method: 'POST',
@@ -21,7 +18,6 @@ const SignUp = () => {
       },
       body: JSON.stringify({ name, email, password, username }),
     });
-
     let data = await res.json();
     console.log(data);
     if (data.success === true) {
@@ -92,5 +88,4 @@ const SignUp = () => {
     </div>
   );
 };
-
 export default SignUp;
