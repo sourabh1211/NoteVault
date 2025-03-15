@@ -7,7 +7,7 @@ const Navbar = () => {
   const [userData, setUserData] = useState(null);
 
   function getUserDetails() {
-    fetch("http://localhost:8000/getUserDetails", {
+    fetch("http://localhost:5000/getUserDetails", {
       mode: "cors",
       method: "POST",
       headers: {
