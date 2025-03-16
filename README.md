@@ -67,11 +67,3 @@ A full-stack **MERN Notes App** with **rich text editing, authentication, and or
    ```sh
    cd backend
    npx nodemon
-4. Dependencies Install in Terminal
-   ```sh
-   for frontend:-
-   npm install react
-   for backend:-
-   npm install node nodemon mongoose mongo bcrypt multer jwt express
-   
-#
