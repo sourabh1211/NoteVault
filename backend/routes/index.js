@@ -9,14 +9,10 @@ const userModel = require('../models/userModel');
 const path = require("path");
 const fs = require("fs");
 const e = require('express');
-
 let secret = "secret";
-
-/* GET home page. */
 router.get('/', function (req, res, next) {
   res.render('index', { title: 'Express' });
 });
-
 router.post("/signUp", async (req, res) => {
   let { username, name, email, password } = req.body;
 
@@ -29,19 +25,15 @@ router.post("/signUp", async (req, res) => {
     });
   }
   else {
-
     bcrypt.genSalt(10, function (err, salt) {
       bcrypt.hash(password, salt, async function (err, hash) {
-
         let user = await User.create({
           username,
           name,
           email,
           password: hash
         });
-
         var token = jwt.sign({ email: user.email, userID: user._id }, secret);
-
         res.json({
           success: true,
           userID: user._id,
@@ -51,14 +43,10 @@ router.post("/signUp", async (req, res) => {
 
       });
     });
-
   }
-
 });
-
 router.post("/login", async (req, res) => {
   let { email, password } = req.body;
-
   let user = await User.findOne({ email });
   if (user) {
     bcrypt.compare(password, user.password, function (err, result) {
@@ -77,7 +65,6 @@ router.post("/login", async (req, res) => {
           message: "Password is incorrect"
         });
       }
-
     }
     )
   }
@@ -89,7 +76,6 @@ router.post("/login", async (req, res) => {
   }
 
 });
-
 router.post("/getNotes", async (req, res) => {
   let notes = await noteModel.find({ uploadedBy: req.body.userId });
   console.log(notes)
@@ -103,10 +89,8 @@ router.post("/getNotes", async (req, res) => {
     })
   }
 });
-
 router.post("/addNote", async (req, res) => {
   let { title, description, content, isImportant, uploadedBy } = req.body;
-
   let note = await noteModel.create({
     title,
     description,
@@ -114,34 +98,26 @@ router.post("/addNote", async (req, res) => {
     isImportant,
     uploadedBy
   });
-
   res.json({
     success: true,
     noteID: note._id,
     userID: uploadedBy
   });
-
 });
 
 router.post("/deleteNote", async (req, res) => {
   try {
     let { noteId } = req.body;
     console.log("Request body:", req.body);
-
-    // Validate noteId
     if (!noteId) {
       return res.status(400).json({ success: false, message: "noteId is required" });
     }
-
-    // Find the note
     let note = await noteModel.findOne({ _id: noteId });
     console.log("Note found:", note);
 
     if (!note) {
       return res.status(404).json({ success: false, message: "Note not found" });
     }
-
-    // Add deletion logic if needed
     await noteModel.deleteOne({ _id: noteId });
 
     res.json({
@@ -161,13 +137,10 @@ router.post("/updateNote", async (req, res) => {
   try {
     let { noteId, title, description, content, isImportant, uploadedBy } = req.body;
     console.log("Request body:", req.body);
-
-    // Validate noteId
     if (!noteId) {
       return res.status(400).json({ success: false, message: "noteId is required" });
     }
 
-    // Find the note
     let note = await noteModel.findOne({ _id: noteId });
     console.log("Note found:", note);
 
@@ -175,7 +148,6 @@ router.post("/updateNote", async (req, res) => {
       return res.status(404).json({ success: false, message: "Note not found" });
     }
 
-    // Add deletion logic if needed
     await noteModel.updateOne({ _id: noteId }, {
       title,
       description,
@@ -220,7 +192,6 @@ router.post("/logout", (req, res) => {
   });
 });
 
-// apis for users
 
 router.post("/getUserDetails", async (req, res) => {
   let { userId } = req.body;
@@ -235,6 +206,4 @@ router.post("/getUserDetails", async (req, res) => {
     });
   }
 })
-
-
 module.exports = router;
