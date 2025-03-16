@@ -3,17 +3,13 @@ import JoditEditor from 'jodit-react';
 import Navbar from '../components/Navbar';
 import CheckBox from '../tools/checkBox';
 import { json, useNavigate } from 'react-router-dom';
-
 const AddNote = () => {
   const editorRef = useRef(null);
-
   const [content, setContent] = useState('');
   const [title, setTitle] = useState("")
   const [desc, setDesc] = useState("")
-
   const [isImportant, setIsImportant] = useState(false);
   let navigate = useNavigate();
-
   const submitForm = (e) => {
     e.preventDefault();
     let res = fetch("http://localhost:5000/addNote",{
@@ -31,7 +27,6 @@ const AddNote = () => {
       }
     })
   }
-
   return (
     <>
       <Navbar />
@@ -53,7 +48,6 @@ const AddNote = () => {
               required
             />
           </div>
-
           <div className="inputBox !block !bg-transparent">
             <label htmlFor="description" className="my-2">Enter A Note Description</label>
             <textarea
@@ -68,22 +62,17 @@ const AddNote = () => {
               required
             ></textarea>
           </div>
-
           <CheckBox title="is Important" check={isImportant} setCheck={setIsImportant} />
-
           <JoditEditor
             ref={editorRef}
             value={content}
             tabIndex={1} // tabIndex of textarea
             onChange={newContent => setContent(newContent)}
           />
-
           <button className="btnNormal my-3 !min-w-[200px]" type="submit">Add Note</button>
         </form>
       </div>
-
     </>
   );
 };
-
 export default AddNote;
