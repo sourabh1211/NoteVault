@@ -3,18 +3,14 @@ import JoditEditor from 'jodit-react';
 import Navbar from '../components/Navbar';
 import CheckBox from '../tools/checkBox';
 import { json, useNavigate, useParams } from 'react-router-dom';
-
 const EditNote = () => {
   let { id } = useParams();
   const editorRef = useRef(null);
-
   const [content, setContent] = useState('');
   const [title, setTitle] = useState("")
   const [desc, setDesc] = useState("")
-
   const [isImportant, setIsImportant] = useState(false);
   let navigate = useNavigate();
-
   const submitForm = (e) => {
     e.preventDefault();
     let res = fetch("http://localhost:5000/updateNote", {
@@ -32,7 +28,6 @@ const EditNote = () => {
       }
     })
   };
-
   const getNote = () => {
      let res = fetch("http://localhost:5000/getNote", {
       mode: "cors",
@@ -46,19 +41,15 @@ const EditNote = () => {
       setIsImportant(data.isImportant);
      })
   };
-
   useEffect(() => {
     getNote()
   }, [])
-
-
   return (
     <>
       <Navbar />
       <div className="EditNoteCon min-h-screen px-[50px]">
         <form onSubmit={submitForm} className="my-5">
           <h3 className="m-0 p-0 text-2xl mb-5">Edit Note</h3>
-
           <div className="inputBox !block !bg-transparent">
             <label htmlFor="title" className="my-2">Enter A Note Title</label>
             <input
@@ -73,7 +64,6 @@ const EditNote = () => {
               required
             />
           </div>
-
           <div className="inputBox !block !bg-transparent">
             <label htmlFor="description" className="my-2">Enter A Note Description</label>
             <textarea
@@ -88,16 +78,13 @@ const EditNote = () => {
               required
             ></textarea>
           </div>
-
           <CheckBox title="is Important" check={isImportant} setCheck={setIsImportant} />
-
           <JoditEditor
             ref={editorRef}
             value={content}
             tabIndex={1}
             onChange={newContent => setContent(newContent)}
           />
-
           <button className="btnNormal my-3 !min-w-[200px]" type="submit">Update Note</button>
         </form>
       </div>
@@ -105,5 +92,4 @@ const EditNote = () => {
     </>
   );
 };
-
 export default EditNote;
