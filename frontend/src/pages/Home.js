@@ -4,7 +4,6 @@ import Note from '../components/Note'
 import Fotter from '../components/Fotter'
 import Oops from '../components/Oops'
 import { useNavigate } from 'react-router-dom'
-
 const Home = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState("");
@@ -12,7 +11,6 @@ const Home = () => {
   const [query, setQuery] = useState("");
   const [userData, setUserData] = useState(null);
   const [deleteNote, setDeleteNote] = useState(null);
-
   let getNotes = () => {
     fetch("http://localhost:5000/getNotes", {
       mode: "cors",
@@ -26,7 +24,6 @@ const Home = () => {
       else setData(data);
     });
   };
-
   function getUserDetails() {
     fetch("http://localhost:5000/getUserDetails", {
       mode: "cors",
@@ -40,15 +37,12 @@ const Home = () => {
       else setUserData(data);
     })
   }
-
   useEffect(() => {
     getNotes();
     getUserDetails();
   }, []);
-
   const handleDelete = () => {
     if (!deleteNote) return;
-
     fetch("http://localhost:5000/deleteNote", {
       mode: "cors",
       method: "POST",
@@ -68,7 +62,6 @@ const Home = () => {
       })
       .catch(err => console.log(err));
   };
-
   return (
     <>
       <Navbar />
@@ -104,8 +97,6 @@ const Home = () => {
         )}
       </div>
       <Fotter />
-
-      
       {deleteNote && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 backdrop-blur-md z-[99999]">
           <div className="bg-white rounded-lg shadow-lg p-5 w-[28vw] h-auto text-center">
@@ -115,7 +106,6 @@ const Home = () => {
             <p className="text-gray-600 text-[16px] my-2 leading-[1.5]">
               Do you want to delete this note?
             </p>
-
             <div className="flex justify-center gap-2 mt-4">
               <button 
                 onClick={handleDelete}
@@ -136,5 +126,4 @@ const Home = () => {
     </>
   );
 }
-
 export default Home;
