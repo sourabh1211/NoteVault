@@ -28,7 +28,7 @@ const SearchPage = () => {
     }
   }, [data, myParam]);
   const getNotes = () => {
-    fetch("http://localhost:5000/getNotes", {
+    fetch("https://notesapp-1-56xy.onrender.com/getNotes", {
       mode: "cors",
       method: "POST",
       headers: {
