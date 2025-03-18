@@ -10,7 +10,7 @@ const SignUp = () => {
   let navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let res = await fetch('http://localhost:5000/signUp', {
+    let res = await fetch('https://notesapp-1-56xy.onrender.com/signUp', {
       mode: 'cors',
       method: 'POST',
       headers: {
