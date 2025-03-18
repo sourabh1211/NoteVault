@@ -41,6 +41,12 @@ A full-stack **MERN Notes App** with **rich text editing, authentication, and or
 
 ---
 
+## Deployment 🌍
+
+🚀 Live Demo: [CodeJourney](https://sourabhnotepad.vercel.app/)
+
+---
+
 ## 📸 Website View  
 
 | Login | SignUp | DashBoard/Home | Profile | Add Note | SingleNotePage | NoPage | Delete |
