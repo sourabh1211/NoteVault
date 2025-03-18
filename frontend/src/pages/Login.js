@@ -11,7 +11,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let res = await fetch('http://localhost:5000/login', {
+    let res = await fetch('https://notesapp-1-56xy.onrender.com/login', {
       mode: 'cors',
       method: 'POST',
       headers: {
