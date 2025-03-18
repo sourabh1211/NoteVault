@@ -12,7 +12,7 @@ const AddNote = () => {
   let navigate = useNavigate();
   const submitForm = (e) => {
     e.preventDefault();
-    let res = fetch("http://localhost:5000/addNote",{
+    let res = fetch("https://notesapp-1-56xy.onrender.com/addNote",{
       mode:"cors",
       method:"POST",
       headers:{"Content-Type":"application/json"},
@@ -66,7 +66,7 @@ const AddNote = () => {
           <JoditEditor
             ref={editorRef}
             value={content}
-            tabIndex={1} // tabIndex of textarea
+            tabIndex={1}
             onChange={newContent => setContent(newContent)}
           />
           <button className="btnNormal my-3 !min-w-[200px]" type="submit">Add Note</button>
