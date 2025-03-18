@@ -13,7 +13,7 @@ const EditNote = () => {
   let navigate = useNavigate();
   const submitForm = (e) => {
     e.preventDefault();
-    let res = fetch("http://localhost:5000/updateNote", {
+    let res = fetch("https://notesapp-1-56xy.onrender.com/updateNote", {
       mode: "cors",
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -29,7 +29,7 @@ const EditNote = () => {
     })
   };
   const getNote = () => {
-     let res = fetch("http://localhost:5000/getNote", {
+     let res = fetch("https://notesapp-1-56xy.onrender.com/getNote", {
       mode: "cors",
       method: "POST",
       headers: { "Content-Type": "application/json" },
