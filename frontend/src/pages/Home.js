@@ -12,7 +12,7 @@ const Home = () => {
   const [userData, setUserData] = useState(null);
   const [deleteNote, setDeleteNote] = useState(null);
   let getNotes = () => {
-    fetch("http://localhost:5000/getNotes", {
+    fetch("https://notesapp-1-56xy.onrender.com/getNotes", {
       mode: "cors",
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -25,7 +25,7 @@ const Home = () => {
     });
   };
   function getUserDetails() {
-    fetch("http://localhost:5000/getUserDetails", {
+    fetch("https://notesapp-1-56xy.onrender.com/getUserDetails", {
       mode: "cors",
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -43,7 +43,7 @@ const Home = () => {
   }, []);
   const handleDelete = () => {
     if (!deleteNote) return;
-    fetch("http://localhost:5000/deleteNote", {
+    fetch("https://notesapp-1-56xy.onrender.com/deleteNote", {
       mode: "cors",
       method: "POST",
       headers: {
