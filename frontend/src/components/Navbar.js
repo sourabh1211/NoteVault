@@ -7,7 +7,7 @@ const Navbar = () => {
   const [userData, setUserData] = useState(null);
 
   function getUserDetails() {
-    fetch("http://localhost:5000/getUserDetails", {
+    fetch("https://notesapp-1-56xy.onrender.com/getUserDetails", {
       mode: "cors",
       method: "POST",
       headers: {
