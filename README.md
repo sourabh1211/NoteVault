@@ -63,7 +63,7 @@ A full-stack **MERN Notes App** with **rich text editing, authentication, and or
 1. **Clone the Repository**  
    ```sh
    git clone https://github.com/yourusername/mern-notes-app.git
-   cd mern-notes-app
+   cd NotePad
 2. **Frontend**
    ```sh
    cd frontend
