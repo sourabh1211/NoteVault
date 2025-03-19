@@ -15,9 +15,7 @@ router.get('/', function (req, res, next) {
 });
 router.post("/signUp", async (req, res) => {
   let { username, name, email, password } = req.body;
-
   let emailCon = await User.findOne({ email });
-
   if (emailCon) {
     return res.json({
       success: false,
@@ -74,7 +72,6 @@ router.post("/login", async (req, res) => {
       message: "Email Id Not Exist !"
     })
   }
-
 });
 router.post("/getNotes", async (req, res) => {
   let notes = await noteModel.find({ uploadedBy: req.body.userId });
@@ -119,7 +116,6 @@ router.post("/deleteNote", async (req, res) => {
       return res.status(404).json({ success: false, message: "Note not found" });
     }
     await noteModel.deleteOne({ _id: noteId });
-
     res.json({
       success: true,
       message: "Note deleted successfully"
@@ -132,7 +128,6 @@ router.post("/deleteNote", async (req, res) => {
     });
   }
 });
-
 router.post("/updateNote", async (req, res) => {
   try {
     let { noteId, title, description, content, isImportant, uploadedBy } = req.body;
@@ -140,14 +135,12 @@ router.post("/updateNote", async (req, res) => {
     if (!noteId) {
       return res.status(400).json({ success: false, message: "noteId is required" });
     }
-
     let note = await noteModel.findOne({ _id: noteId });
     console.log("Note found:", note);
 
     if (!note) {
       return res.status(404).json({ success: false, message: "Note not found" });
     }
-
     await noteModel.updateOne({ _id: noteId }, {
       title,
       description,
@@ -168,7 +161,6 @@ router.post("/updateNote", async (req, res) => {
     });
   }
 });
-
 router.post("/getNote", async (req, res) => {
   let { noteId } = req.body;
   let note = await noteModel.findOne({ _id: noteId });
@@ -183,16 +175,12 @@ router.post("/getNote", async (req, res) => {
     })
   }
 });
-
-
 router.post("/logout", (req, res) => {
   res.json({
     success: true,
     message: "Logged out successfully"
   });
 });
-
-
 router.post("/getUserDetails", async (req, res) => {
   let { userId } = req.body;
   let user = await userModel.findOne({ _id: userId });
