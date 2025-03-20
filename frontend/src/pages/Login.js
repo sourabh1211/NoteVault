@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Loginimg from '../Images/Loginimg.jpg';
-
 const Login = () => {
   let navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -10,7 +9,6 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     let res = await fetch('https://notesapp-1-56xy.onrender.com/login', {
       mode: 'cors',
       method: 'POST',
@@ -22,7 +20,6 @@ const Login = () => {
         password,
       }),
     });
-
     let data = await res.json();
     console.log(data);
     if (data.success === true) {
@@ -35,7 +32,6 @@ const Login = () => {
       alert(data.message);
     }
   };
-
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="flex bg-white p-8 shadow-lg rounded-xl max-w-4xl w-full">
@@ -75,8 +71,6 @@ const Login = () => {
         <div className="w-1/2 h-full">
   <img src={Loginimg} alt="Notes App" className="w-full h-full object-cover" />
 </div>
-
-
       </div>
     </div>
   );
