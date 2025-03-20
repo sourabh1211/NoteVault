@@ -18,13 +18,11 @@ const SingleNotePage = () => {
       .then(res => res.json())
       .then(data => setData(data));
   }
-
   const editNote = () => {
     navigate(`/editNote/${id}`);
   };
   const handleDelete = () => {
     if (!deleteNote) return;
-
     fetch("https://notesapp-1-56xy.onrender.com/deleteNote", {
       mode: "cors",
       method: "POST",
@@ -45,7 +43,6 @@ const SingleNotePage = () => {
   useEffect(() => {
     getNote();
   }, []);
-
   return (
     <>
       <Navbar />
