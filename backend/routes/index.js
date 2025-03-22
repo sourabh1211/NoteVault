@@ -14,7 +14,6 @@ let secret = "secret";
 router.get('/', function (req, res, next) {
   res.render('index', { title: 'Express' });
 });
-// signup
 router.post("/signUp", async (req, res) => {
   let { username, name, email, password } = req.body;
   let emailCon = await User.findOne({ email });
@@ -45,7 +44,6 @@ router.post("/signUp", async (req, res) => {
     });
   }
 });
-// login
 router.post("/login", async (req, res) => {
   let { email, password } = req.body;
   let user = await User.findOne({ email });
