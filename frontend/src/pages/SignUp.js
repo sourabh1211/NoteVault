@@ -7,7 +7,9 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [error, setError] = useState('');
+  
   let navigate = useNavigate();
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     let res = await fetch('https://notesapp-1-56xy.onrender.com/signUp', {
@@ -88,4 +90,5 @@ const SignUp = () => {
     </div>
   );
 };
+
 export default SignUp;
