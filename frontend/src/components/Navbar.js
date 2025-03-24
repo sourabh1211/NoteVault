@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Avatar from "react-avatar";
-
 const Navbar = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
 
+  
   function getUserDetails() {
     fetch("https://notesapp-1-56xy.onrender.com/getUserDetails", {
       mode: "cors",
@@ -31,6 +31,8 @@ const Navbar = () => {
     getUserDetails();
   }, []);
 
+
+  
   return (
     <nav className="w-full h-20 bg-gradient-to-r from-indigo-500 to-purple-500 px-10 flex items-center justify-between shadow-lg">
       <div className="text-3xl font-bold text-white tracking-wide cursor-pointer" onClick={() => navigate("/")}>NotePad</div>
@@ -42,7 +44,6 @@ const Navbar = () => {
         >
           Add Note
         </button>
-        
         <Avatar
           onClick={() => navigate("/profile")}
           name={userData ? userData.username : ""}
@@ -54,5 +55,4 @@ const Navbar = () => {
     </nav>
   );
 };
-
 export default Navbar;
