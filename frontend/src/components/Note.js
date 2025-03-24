@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 const colors = ["#B2FFFF", "#FFFF00", "#FFB6C1", "#98FB98", "#E6E6FA"];
-
 const Note = ({ note, height, index, setDeleteNote }) => {
   let navigate = useNavigate();
-
   const editNote = (id) => {
     navigate(`/editNote/${id}`);
   };
-
   return (
     <>
       <div 
@@ -35,7 +31,6 @@ const Note = ({ note, height, index, setDeleteNote }) => {
           <h1 className="text-black text-lg font-semibold line-clamp-1 mt-1">{note.title}</h1>
           <p className="text-gray-700 line-clamp-4 text-[15px] leading-[1.4]">{note.description}</p>
         </div>
-
         <div className="noteBottom flex justify-between items-center mt-auto pt-2">
           <p className="text-gray-500 text-[13px]">{new Date(note.date).toDateString()}</p>
           <div className="flex items-center gap-2">
@@ -57,5 +52,4 @@ const Note = ({ note, height, index, setDeleteNote }) => {
     </>
   );
 };
-
 export default Note;
