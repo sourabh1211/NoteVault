@@ -1,10 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-
 const Oops = ({image,title,buttonTitle,buttonLink}) => {
-
   let navigate = useNavigate();
-
   return (
     <>
       <div className="container min-w-[90vw] min-h-[60vh] flex flex-col items-center justify-center">
@@ -15,5 +12,4 @@ const Oops = ({image,title,buttonTitle,buttonLink}) => {
     </>
   )
 }
-
 export default Oops
