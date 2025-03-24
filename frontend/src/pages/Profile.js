@@ -4,6 +4,7 @@ import Note from '../components/Note';
 import Fotter from '../components/Fotter';
 import { useNavigate } from 'react-router-dom';
 import Avatar from 'react-avatar';
+
 const Profile = () => {
   const [userDetails, setUserDetails] = useState(null);
   const [notes, setNotes] = useState([]);
@@ -11,6 +12,7 @@ const Profile = () => {
   const [normalNotes, setNormalNotes] = useState([]);
   const [deleteNote, setDeleteNote] = useState(null);
   const navigate = useNavigate();
+  
   function getUserDetails() {
     fetch("https://notesapp-1-56xy.onrender.com/getUserDetails", {
       mode: "cors",
@@ -24,6 +26,7 @@ const Profile = () => {
       .then(data => setUserDetails(data))
       .catch(error => console.error("Error fetching user details:", error));
   }
+  
   function getNotes() {
     fetch("https://notesapp-1-56xy.onrender.com/getNotes", {
       mode: "cors",
@@ -55,6 +58,7 @@ const Profile = () => {
     getUserDetails();
     getNotes();
   }, []);
+  
   const handleDelete = () => {
     if (!deleteNote) return;
     fetch("https://notesapp-1-56xy.onrender.com/deleteNote", {
@@ -76,6 +80,7 @@ const Profile = () => {
       })
       .catch(err => console.log(err));
   };
+  
   return (
     <>
       <Navbar />
@@ -134,4 +139,5 @@ const Profile = () => {
     </>
   );
 };
+
 export default Profile;
