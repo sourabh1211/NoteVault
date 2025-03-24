@@ -4,6 +4,7 @@ import Note from '../components/Note'
 import Fotter from '../components/Fotter'
 import Oops from '../components/Oops'
 import { useNavigate } from 'react-router-dom'
+
 const Home = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState("");
@@ -11,6 +12,7 @@ const Home = () => {
   const [query, setQuery] = useState("");
   const [userData, setUserData] = useState(null);
   const [deleteNote, setDeleteNote] = useState(null);
+  
   let getNotes = () => {
     fetch("https://notesapp-1-56xy.onrender.com/getNotes", {
       mode: "cors",
@@ -24,6 +26,7 @@ const Home = () => {
       else setData(data);
     });
   };
+  
   function getUserDetails() {
     fetch("https://notesapp-1-56xy.onrender.com/getUserDetails", {
       mode: "cors",
@@ -41,6 +44,7 @@ const Home = () => {
     getNotes();
     getUserDetails();
   }, []);
+  
   const handleDelete = () => {
     if (!deleteNote) return;
     fetch("https://notesapp-1-56xy.onrender.com/deleteNote", {
@@ -62,9 +66,11 @@ const Home = () => {
       })
       .catch(err => console.log(err));
   };
+  
   return (
     <>
       <Navbar />
+    
       <div className='mt-6 flex items-center justify-between w-screen px-12'>
         <h1 className='text-3xl font-semibold text-gray-700'>Hi, {userData ? userData.name : ""}</h1>
         <div className="relative w-[380px]">
@@ -96,7 +102,9 @@ const Home = () => {
           </div>
         )}
       </div>
+          
       <Fotter />
+          
       {deleteNote && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 backdrop-blur-md z-[99999]">
           <div className="bg-white rounded-lg shadow-lg p-5 w-[28vw] h-auto text-center">
@@ -115,8 +123,7 @@ const Home = () => {
               </button>
               <button 
                 onClick={() => setDeleteNote(null)}
-                className="w-[45%] py-2 bg-[#578df5] text-white rounded-md font-medium"
-              >
+                className="w-[45%] py-2 bg-[#578df5] text-white rounded-md font-medium">
                 Cancel
               </button>
             </div>
@@ -126,4 +133,5 @@ const Home = () => {
     </>
   );
 }
+
 export default Home;
