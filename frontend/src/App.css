@@ -2,7 +2,6 @@
   margin: 0;
   padding: 0;
 }
-
 body{
   margin: 0;
   padding: 0;
@@ -13,11 +12,9 @@ body{
   color: var(--text-color);
   transition: all 0.3s ease-in-out;
 }
-
 html{
   overflow-x: hidden;
 }
-
 :root{
   --primary: #fff;
   --seco: #F4F4F4;
@@ -29,7 +26,6 @@ html{
   --bg-color: #121212;
   --text-color: white;
 }
-
 .form{
   padding: 15px;
   display: flex;
@@ -39,7 +35,6 @@ html{
   width: 30vw;
   min-height: 30vh;
 }
-
 .inputBox{
   width: 100%;
   background-color: var(--seco);
@@ -47,7 +42,6 @@ html{
   align-items: center;
   margin-bottom: 10px;
 }
-
 .inputBox input{
   flex: 1;
   padding: 7px;
@@ -55,7 +49,6 @@ html{
   border: 0;
   outline: 0;
 }
-
 .btnBig{
   width: 100%;
   padding: 10px;
@@ -66,11 +59,9 @@ html{
   cursor: pointer;
   transition: ease .3s;
 }
-
 .btnBig:hover{
   transform: scale(102%);
 }
-
 .btnNormal{
   min-width: 130px;
   padding: 10px;
@@ -80,7 +71,6 @@ html{
   border: 0;
   outline: 0;
 }
-
 .gridItems{
   width: 100%;
   padding: 0px 50px;
@@ -89,11 +79,9 @@ html{
   grid-template-columns: auto auto auto auto;
   gap: 10px;
 }
-
 .gridItems.gridOne{
   grid-template-columns: auto;
 }
-
 .gridItems .note{
   width: 23vw;
   background-color: var(--seco);
@@ -101,15 +89,12 @@ html{
   cursor: pointer;
   height: 220px;
 }
-
 .sp-text{
   color: var(--accent);
 }
-
 .jodit-wysiwyg{
   min-height: 200px !important;
 }
-
 .checkBox.active{
   background-color: #578DF5;
 }
