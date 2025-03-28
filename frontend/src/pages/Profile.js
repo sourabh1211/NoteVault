@@ -12,29 +12,23 @@ const Profile = () => {
   const [normalNotes, setNormalNotes] = useState([]);
   const [deleteNote, setDeleteNote] = useState(null);
   const navigate = useNavigate();
-  
+
   function getUserDetails() {
     fetch("https://notesapp-1-56xy.onrender.com/getUserDetails", {
-      mode: "cors",
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ userId: localStorage.getItem("userID") })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId: localStorage.getItem("userID") }),
     })
       .then(res => res.json())
       .then(data => setUserDetails(data))
       .catch(error => console.error("Error fetching user details:", error));
   }
-  
+
   function getNotes() {
     fetch("https://notesapp-1-56xy.onrender.com/getNotes", {
-      mode: "cors",
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ userId: localStorage.getItem("userID") })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId: localStorage.getItem("userID") }),
     })
       .then(res => res.json())
       .then(data => {
@@ -54,20 +48,18 @@ const Profile = () => {
         setNormalNotes([]);
       });
   }
+
   useEffect(() => {
     getUserDetails();
     getNotes();
   }, []);
-  
+
   const handleDelete = () => {
     if (!deleteNote) return;
     fetch("https://notesapp-1-56xy.onrender.com/deleteNote", {
-      mode: "cors",
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ noteId: deleteNote._id })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ noteId: deleteNote._id }),
     })
       .then(resp => resp.json())
       .then(data => {
@@ -80,55 +72,72 @@ const Profile = () => {
       })
       .catch(err => console.log(err));
   };
-  
+
   return (
     <>
       <Navbar />
-      <div className="flex flex-col items-center w-screen py-10 bg-gradient-to-b from-gray-400 to-gray-600 text-white shadow-lg">
-        <Avatar name={userDetails ? userDetails.name : ""} size="160" round="50%" className="shadow-lg" />
-        <h2 className="mt-4 text-2xl font-semibold">{userDetails ? userDetails.name : ""}</h2>
-        <p className="text-sm opacity-75">Joined on {userDetails ? new Date(userDetails.date).toDateString() : ""}</p>
-        <button onClick={() => {
-          localStorage.removeItem("userID");
-          navigate("/login");
-        }} className="mt-4 px-5 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600">Logout</button>
+      <div className="flex flex-col items-center w-full py-12 bg-gradient-to-br from-slate-700 via-gray-800 to-gray-900 text-white shadow-xl">
+        <Avatar name={userDetails?.name || ""} size="160" round="50%" className="shadow-lg border-4 border-white" />
+        <h2 className="mt-6 text-3xl font-bold tracking-wide">{userDetails?.name || ""}</h2>
+        <p className="text-md opacity-70">Joined on {userDetails ? new Date(userDetails.date).toDateString() : ""}</p>
+        <button
+          onClick={() => {
+            localStorage.removeItem("userID");
+            navigate("/login");
+          }}
+          className="mt-5 px-6 py-2 bg-red-600 hover:bg-red-700 transition rounded-lg font-medium shadow-md"
+        >
+          Logout
+        </button>
       </div>
-      <div className='w-screen px-10 py-5'>
-        <h3 className='text-3xl font-semibold text-center text-gray-700'>Your <span className="text-gray-600">Important</span> Notes</h3>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-10"> 
-        {importantNotes.length > 0 ? importantNotes.map((note, index) => (
-          <Note key={note._id} note={note} index={index} setDeleteNote={setDeleteNote} />
-        )) : <p className="text-center text-gray-500">No important notes found.</p>}
-      </div>
-      <div className='w-screen px-10 py-5 mt-6'>
-        <h3 className='text-3xl font-semibold text-center text-gray-700'>Your <span className="text-gray-600">Normal</span> Notes</h3>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-10 mb-10"> 
-        {normalNotes.length > 0 ? normalNotes.map((note, index) => (
-          <Note key={note._id} note={note} index={index} setDeleteNote={setDeleteNote} />
-        )) : <p className="text-center text-gray-500">No normal notes found.</p>}
-      </div>
+
+      <section className="w-full px-6 sm:px-10 py-10 bg-gray-100">
+        <h3 className="text-4xl font-bold text-center text-gray-800 mb-8">
+          Your <span className="text-indigo-600">Important</span> Notes
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          {importantNotes.length > 0 ? importantNotes.map((note, index) => (
+            <Note key={note._id} note={note} index={index} setDeleteNote={setDeleteNote} />
+          )) : (
+            <p className="col-span-full text-center text-gray-500">No important notes found.</p>
+          )}
+        </div>
+      </section>
+
+      <section className="w-full px-6 sm:px-10 py-10 bg-white">
+        <h3 className="text-4xl font-bold text-center text-gray-800 mb-8">
+          Your <span className="text-blue-500">Normal</span> Notes
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          {normalNotes.length > 0 ? normalNotes.map((note, index) => (
+            <Note key={note._id} note={note} index={index} setDeleteNote={setDeleteNote} />
+          )) : (
+            <p className="col-span-full text-center text-gray-500">No normal notes found.</p>
+          )}
+        </div>
+      </section>
+
       <Fotter />
+
       {deleteNote && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 backdrop-blur-md z-[99999]">
-          <div className="bg-white rounded-lg shadow-lg p-5 w-[28vw] h-auto text-center">
-            <h3 className="text-[20px] font-semibold">
-              Delete Note <span className="text-[#578df5]">“{deleteNote.title}”</span>
+        <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-[99999]">
+          <div className="bg-white rounded-xl shadow-xl p-6 w-[90%] sm:w-[400px] text-center">
+            <h3 className="text-xl font-semibold text-gray-800">
+              Delete Note <span className="text-indigo-600">“{deleteNote.title}”</span>
             </h3>
-            <p className="text-gray-600 text-[16px] my-2 leading-[1.5]">
-              Do you want to delete this note?
+            <p className="text-gray-600 mt-2 mb-4 text-sm">
+              Are you sure you want to delete this note? This action cannot be undone.
             </p>
-            <div className="flex justify-center gap-2 mt-4">
-              <button 
+            <div className="flex justify-center gap-4">
+              <button
                 onClick={handleDelete}
-                className="w-[45%] py-2 bg-[#f55757] text-white rounded-md font-medium"
+                className="w-1/2 py-2 bg-red-500 hover:bg-red-600 transition text-white rounded-lg font-medium"
               >
                 Delete
               </button>
-              <button 
+              <button
                 onClick={() => setDeleteNote(null)}
-                className="w-[45%] py-2 bg-[#578df5] text-white rounded-md font-medium"
+                className="w-1/2 py-2 bg-gray-300 hover:bg-gray-400 transition text-gray-800 rounded-lg font-medium"
               >
                 Cancel
               </button>
