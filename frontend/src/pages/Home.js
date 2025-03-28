@@ -40,6 +40,7 @@ const Home = () => {
       else setUserData(data);
     })
   }
+
   useEffect(() => {
     getNotes();
     getUserDetails();
@@ -71,28 +72,31 @@ const Home = () => {
     <>
       <Navbar />
     
-      <div className='mt-6 flex items-center justify-between w-screen px-12'>
-        <h1 className='text-3xl font-semibold text-gray-700'>Hi, {userData ? userData.name : ""}</h1>
-        <div className="relative w-[380px]">
+      <div className='mt-10 flex items-center justify-between w-full px-10 md:px-20'>
+        <h1 className='text-4xl font-bold text-gray-800 tracking-wide drop-shadow-md'>
+          Welcome back, <span className="text-blue-500">{userData ? userData.name : ""}</span>
+        </h1>
+        <div className="relative w-[300px] md:w-[400px]">
           <input 
             onKeyUp={(e) => { if (e.key === "Enter") navigate(`/search?query=${query}`); }} 
             onChange={(e) => setQuery(e.target.value)} 
             value={query} 
             type="text" 
-            placeholder='Search Notes' 
-            className='w-full p-3 rounded-lg text-lg border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400 transition-transform duration-300 transform hover:scale-105' 
+            placeholder='Search your notes... ✍️' 
+            className='w-full p-4 rounded-xl text-base border border-gray-200 shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 hover:scale-105 bg-gradient-to-r from-white via-gray-50 to-white'
           />
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-12 py-6">
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-10 md:px-20 py-10">
         {data ? (
           data.map((el, index) => (
-            <div key={index} className="bg-white p-4 rounded-xl shadow-lg transition-transform duration-300 transform hover:scale-105">
+            <div key={index} className="bg-white p-6 rounded-2xl shadow-2xl border border-gray-100 transition-transform duration-300 transform hover:scale-[1.04] hover:shadow-blue-200">
               <Note index={index} note={el} setDeleteNote={setDeleteNote} />
             </div>
           ))
         ) : (
-          <div className="flex justify-center items-center w-full">
+          <div className="col-span-full flex justify-center items-center w-full">
             <Oops 
               title={"No Note Found"} 
               image={require("../Images/oops2.png")} 
@@ -106,24 +110,24 @@ const Home = () => {
       <Fotter />
           
       {deleteNote && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 backdrop-blur-md z-[99999]">
-          <div className="bg-white rounded-lg shadow-lg p-5 w-[28vw] h-auto text-center">
-            <h3 className="text-[20px] font-semibold">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 backdrop-blur-sm z-[99999]">
+          <div className="bg-white rounded-2xl shadow-2xl p-6 w-[85%] md:w-[28vw] max-w-md text-center">
+            <h3 className="text-xl font-bold text-gray-800">
               Delete Note <span className="text-[#578df5]">“{deleteNote.title}”</span>
             </h3>
-            <p className="text-gray-600 text-[16px] my-2 leading-[1.5]">
-              Do you want to delete this note?
+            <p className="text-gray-600 text-base mt-2 mb-4 leading-[1.6]">
+              Are you sure you want to delete this note? This action can't be undone.
             </p>
-            <div className="flex justify-center gap-2 mt-4">
+            <div className="flex justify-center gap-3 mt-4">
               <button 
                 onClick={handleDelete}
-                className="w-[45%] py-2 bg-[#f55757] text-white rounded-md font-medium"
+                className="w-[45%] py-2 bg-red-500 hover:bg-red-600 transition text-white rounded-lg font-semibold shadow-md"
               >
                 Delete
               </button>
               <button 
                 onClick={() => setDeleteNote(null)}
-                className="w-[45%] py-2 bg-[#578df5] text-white rounded-md font-medium">
+                className="w-[45%] py-2 bg-blue-500 hover:bg-blue-600 transition text-white rounded-lg font-semibold shadow-md">
                 Cancel
               </button>
             </div>
