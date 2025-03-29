@@ -35,7 +35,7 @@ const Navbar = () => {
   
   return (
     <nav className="w-full h-20 bg-gradient-to-r from-indigo-500 to-purple-500 px-10 flex items-center justify-between shadow-lg">
-      <div className="text-3xl font-bold text-white tracking-wide cursor-pointer" onClick={() => navigate("/")}>NotePad</div>
+      <div className="text-3xl font-bold text-white tracking-wide cursor-pointer" onClick={() => navigate("/")}>NoteVault</div>
       
       <div className="flex items-center gap-6">
         <button
