@@ -8,7 +8,7 @@ const Footer = () => {
       <h3 className="text-3xl font-bold tracking-wide px-3 py-1 rounded-lg">NoteVault</h3>
       <div className="text-center">
         <p className="text-lg">
-          Designed By <span className="font-semibold">NoteVault</span> @2024
+          Designed By <span className="font-semibold">Sourabh</span> @2024
         </p>
         <p className="text-sm">&copy; 2024 All Rights Reserved</p>
       </div>
