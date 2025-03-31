@@ -2,9 +2,10 @@ import React from "react";
 import LinkedinImg from "../Images/linkedin.png";
 import InstagramImg from "../Images/instagram.png";
 import Mailimg from "../Images/gmail.png";
+
 const Footer = () => {
   return (
-    <footer className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white py-6 px-10 flex items-center justify-between shadow-lg">
+    <footer className="w-full bg-gradient-to-r from-blue-900 to-blue-700 text-white py-6 px-10 flex items-center justify-between shadow-lg">
       <h3 className="text-3xl font-bold tracking-wide px-3 py-1 rounded-lg">NoteVault</h3>
       <div className="text-center">
         <p className="text-lg">
@@ -44,4 +45,5 @@ const Footer = () => {
     </footer>
   );
 };
+
 export default Footer;
