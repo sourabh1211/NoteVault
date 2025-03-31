@@ -51,7 +51,7 @@ A full-stack **MERN Notes App** with **rich text editing, authentication, and or
 
 | Login | SignUp | DashBoard/Home | Profile | Add Note | SingleNotePage | NoPage | Delete |
 |------------|----------------|------------------|---------|-----------|--------------|--------|--------|
-| ![Login](login.png) | ![SignUp](signup.png) | ![DashBoard/Home](Home.png) | ![Profile](Profile.png) | ![Add Note](AddNote.png) | ![SingleNotePage](singlenotepage.png) | ![NoPage](Screenshot%202025-03-13%20143437.png) | ![Delete](delete.png) |
+| ![Login](login.png) | ![SignUp](signup.png) | ![DashBoard/Home](Home.png) | ![Profile](Profile.png) | ![Add Note](AddNote.png) | ![SingleNotePage](singlenotepage.png) | ![NoPage](nopage.png) | ![Delete](delete.png) |
 
 
 ---
