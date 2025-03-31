@@ -43,7 +43,7 @@ A full-stack **MERN Notes App** with **rich text editing, authentication, and or
 
 ## Deployment 🌍
 
-🚀 Live Demo: [NotePad](https://sourabhnotepad.vercel.app/)
+🚀 Live Demo: [NoteVault](https://sourabhnotepad.vercel.app/)
 
 ---
 
