@@ -40,7 +40,6 @@ const Home = () => {
       else setUserData(data);
     })
   }
-  
   useEffect(() => {
     getNotes();
     getUserDetails();
@@ -72,65 +71,59 @@ const Home = () => {
     <>
       <Navbar />
     
-      <div className='min-h-screen flex flex-col'>
-        <div className='mt-8 flex items-center justify-between w-full px-10 lg:px-16'>
-          <h1 className='text-4xl font-bold text-gray-800'>Hello, {userData ? userData.name : ""}</h1>
-          <div className="relative w-[400px]">
-            <input 
-              onKeyUp={(e) => { if (e.key === "Enter") navigate(`/search?query=${query}`); }} 
-              onChange={(e) => setQuery(e.target.value)} 
-              value={query} 
-              type="text" 
-              placeholder='Search Notes' 
-              className='w-full p-4 rounded-lg text-lg border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-transform duration-300 transform hover:scale-105' 
+      <div className='mt-6 flex items-center justify-between w-screen px-12'>
+        <h1 className='text-3xl font-semibold text-gray-700'>Hi, {userData ? userData.name : ""}</h1>
+        <div className="relative w-[380px]">
+          <input 
+            onKeyUp={(e) => { if (e.key === "Enter") navigate(`/search?query=${query}`); }} 
+            onChange={(e) => setQuery(e.target.value)} 
+            value={query} 
+            type="text" 
+            placeholder='Search Notes' 
+            className='w-full p-3 rounded-lg text-lg border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400 transition-transform duration-300 transform hover:scale-105' 
+          />
+        </div>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-12 py-6">
+        {data ? (
+          data.map((el, index) => (
+            <div key={index} className="bg-white p-4 rounded-xl shadow-lg transition-transform duration-300 transform hover:scale-105">
+              <Note index={index} note={el} setDeleteNote={setDeleteNote} />
+            </div>
+          ))
+        ) : (
+          <div className="flex justify-center items-center w-full">
+            <Oops 
+              title={"No Note Found"} 
+              image={require("../Images/oops2.png")} 
+              buttonTitle={"Add Note"} 
+              buttonLink={"/addNewNote"} 
             />
           </div>
-        </div>
-
-        {/* Scrollable notes section */}
-        <div className="flex-grow overflow-y-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 px-10 py-6">
-            {data ? (
-              data.map((el, index) => (
-                <div key={index} className="bg-white p-5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out transform hover:scale-105">
-                  <Note index={index} note={el} setDeleteNote={setDeleteNote} />
-                </div>
-              ))
-            ) : (
-              <div className="flex justify-center items-center w-full">
-                <Oops 
-                  title={"No Notes Found"} 
-                  image={require("../Images/oops2.png")} 
-                  buttonTitle={"Add Note"} 
-                  buttonLink={"/addNewNote"} 
-                />
-              </div>
-            )}
-          </div>
-        </div>
-        
-        {/* Sticky footer */}
-        <Fotter />
+        )}
       </div>
-
+          
+      <Fotter />
+          
       {deleteNote && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 backdrop-blur-md z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-[30vw] h-auto text-center">
-            <h3 className="text-xl font-semibold text-gray-800">
-              Delete Note <span className="text-blue-500">“{deleteNote.title}”</span>
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 backdrop-blur-md z-[99999]">
+          <div className="bg-white rounded-lg shadow-lg p-5 w-[28vw] h-auto text-center">
+            <h3 className="text-[20px] font-semibold">
+              Delete Note <span className="text-[#578df5]">“{deleteNote.title}”</span>
             </h3>
-            <p className="text-gray-600 text-lg my-3 leading-7">
-              Are you sure you want to delete this note?
+            <p className="text-gray-600 text-[16px] my-2 leading-[1.5]">
+              Do you want to delete this note?
             </p>
-            <div className="flex justify-center gap-4 mt-6">
+            <div className="flex justify-center gap-2 mt-4">
               <button 
                 onClick={handleDelete}
-                className="w-[45%] py-3 bg-red-600 text-white rounded-md font-medium hover:bg-red-500 transition-all">
+                className="w-[45%] py-2 bg-[#f55757] text-white rounded-md font-medium"
+              >
                 Delete
               </button>
               <button 
                 onClick={() => setDeleteNote(null)}
-                className="w-[45%] py-3 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-500 transition-all">
+                className="w-[45%] py-2 bg-[#578df5] text-white rounded-md font-medium">
                 Cancel
               </button>
             </div>
