@@ -24,6 +24,8 @@ const userSchema = new mongoose.Schema({
 });
 const User = mongoose.model('User', userSchema);
 module.exports = User;
+
+
 // const mongoose = require('mongoose');
 // mongoose.connect("mongodb://127.0.0.1:27017/noteApp");
 // const userSchema = new mongoose.Schema({
