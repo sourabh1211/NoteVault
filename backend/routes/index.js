@@ -102,7 +102,6 @@ router.post("/addNote", async (req, res) => {
     userID: uploadedBy
   });
 });
-
 router.post("/deleteNote", async (req, res) => {
   try {
     let { noteId } = req.body;
