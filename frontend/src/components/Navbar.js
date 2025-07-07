@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Avatar from "react-avatar";
-
 const Navbar = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
-
   function getUserDetails() {
     fetch("https://notesapp-1-56xy.onrender.com/getUserDetails", {
       mode: "cors",
@@ -58,5 +56,4 @@ const Navbar = () => {
     </nav>
   );
 };
-
 export default Navbar;
