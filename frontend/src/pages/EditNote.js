@@ -289,7 +289,7 @@ const EditNote = () => {
 
             {/* Checkbox: visible white label */}
             <div className="flex items-center gap-3">
-              <CheckBox title="Is Important" check={isImportant} setCheck={setIsImportant} className="text-white" />
+              <CheckBox title=\"Is Important\" check={isImportant} setCheck={setIsImportant} className=\"text-white font-medium\" />
             </div>
 
             {/* Editor Card */}
@@ -385,3 +385,4 @@ const EditNote = () => {
 };
 
 export default EditNote;
+
