@@ -1,81 +1,81 @@
-import React, { useState, useRef } from 'react';
-import JoditEditor from 'jodit-react';
-import Navbar from '../components/Navbar';
-import CheckBox from '../tools/checkBox';
-import { json, useNavigate } from 'react-router-dom';
-const AddNote = () => {
-  const editorRef = useRef(null);
-  const [content, setContent] = useState('');
-  const [title, setTitle] = useState("")
-  const [desc, setDesc] = useState("")
-  const [isImportant, setIsImportant] = useState(false);
-  let navigate = useNavigate();
-  const submitForm = (e) => {
-    e.preventDefault();
-    let res = fetch("https://notesapp-1-56xy.onrender.com/addNote",{
-      mode:"cors",
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({title:title, description:desc, content:content, isImportant:isImportant,uploadedBy:localStorage.getItem("userID")})
-    }).then(response => response.json()).then(data => {
-      if(data.success){
-        alert("Note Added Successfully")
-        navigate("/");
-      }
-      else{
-        alert("Error Adding Note..!")
-      }
-    })
-  }
-  return (
-    <>
-      <Navbar />
-      <div className="addNoteCon min-h-screen px-[50px]">
-        <form onSubmit={submitForm} className="my-5">
-          <h3 className="m-0 p-0 text-2xl mb-5">Create A New Note</h3>
+// import React, { useState, useRef } from 'react';
+// import JoditEditor from 'jodit-react';
+// import Navbar from '../components/Navbar';
+// import CheckBox from '../tools/checkBox';
+// import { json, useNavigate } from 'react-router-dom';
+// const AddNote = () => {
+//   const editorRef = useRef(null);
+//   const [content, setContent] = useState('');
+//   const [title, setTitle] = useState("")
+//   const [desc, setDesc] = useState("")
+//   const [isImportant, setIsImportant] = useState(false);
+//   let navigate = useNavigate();
+//   const submitForm = (e) => {
+//     e.preventDefault();
+//     let res = fetch("https://notesapp-1-56xy.onrender.com/addNote",{
+//       mode:"cors",
+//       method:"POST",
+//       headers:{"Content-Type":"application/json"},
+//       body: JSON.stringify({title:title, description:desc, content:content, isImportant:isImportant,uploadedBy:localStorage.getItem("userID")})
+//     }).then(response => response.json()).then(data => {
+//       if(data.success){
+//         alert("Note Added Successfully")
+//         navigate("/");
+//       }
+//       else{
+//         alert("Error Adding Note..!")
+//       }
+//     })
+//   }
+//   return (
+//     <>
+//       <Navbar />
+//       <div className="addNoteCon min-h-screen px-[50px]">
+//         <form onSubmit={submitForm} className="my-5">
+//           <h3 className="m-0 p-0 text-2xl mb-5">Create A New Note</h3>
 
-          <div className="inputBox !block !bg-transparent">
-            <label htmlFor="title" className="my-2">Enter A Note Title</label>
-            <input
-              type="text"
-              placeholder="Note Title"
-              className="w-full p-2 rounded-md mt-1"
-              style={{ border: "2px solid #555" }}
-              name="title"
-              id="title"
-              onChange={(e)=>{setTitle(e.target.value)}}
-              value={title}
-              required
-            />
-          </div>
-          <div className="inputBox !block !bg-transparent">
-            <label htmlFor="description" className="my-2">Enter A Note Description</label>
-            <textarea
-              type="text"
-              placeholder="Note Description"
-              className="w-full p-2 rounded-md mt-1 min-h-[100px]"
-              style={{ border: "2px solid #555" }}
-              name="description"
-              id="description"
-              onChange={(e)=>{setDesc(e.target.value)}}
-              value={desc}
-              required
-            ></textarea>
-          </div>
-          <CheckBox title="is Important" check={isImportant} setCheck={setIsImportant} />
-          <JoditEditor
-            ref={editorRef}
-            value={content}
-            tabIndex={1}
-            onChange={newContent => setContent(newContent)}
-          />
-          <button className="btnNormal my-3 !min-w-[200px]" type="submit">Add Note</button>
-        </form>
-      </div>
-    </>
-  );
-};
-export default AddNote;
+//           <div className="inputBox !block !bg-transparent">
+//             <label htmlFor="title" className="my-2">Enter A Note Title</label>
+//             <input
+//               type="text"
+//               placeholder="Note Title"
+//               className="w-full p-2 rounded-md mt-1"
+//               style={{ border: "2px solid #555" }}
+//               name="title"
+//               id="title"
+//               onChange={(e)=>{setTitle(e.target.value)}}
+//               value={title}
+//               required
+//             />
+//           </div>
+//           <div className="inputBox !block !bg-transparent">
+//             <label htmlFor="description" className="my-2">Enter A Note Description</label>
+//             <textarea
+//               type="text"
+//               placeholder="Note Description"
+//               className="w-full p-2 rounded-md mt-1 min-h-[100px]"
+//               style={{ border: "2px solid #555" }}
+//               name="description"
+//               id="description"
+//               onChange={(e)=>{setDesc(e.target.value)}}
+//               value={desc}
+//               required
+//             ></textarea>
+//           </div>
+//           <CheckBox title="is Important" check={isImportant} setCheck={setIsImportant} />
+//           <JoditEditor
+//             ref={editorRef}
+//             value={content}
+//             tabIndex={1}
+//             onChange={newContent => setContent(newContent)}
+//           />
+//           <button className="btnNormal my-3 !min-w-[200px]" type="submit">Add Note</button>
+//         </form>
+//       </div>
+//     </>
+//   );
+// };
+// export default AddNote;
 
 
 
@@ -145,7 +145,11 @@ const AddNote = () => {
   };
 
   return (
-    <div ref={shellRef} onMouseMove={onMove} className="relative min-h-screen overflow-hidden bg-[#0b0b12]">
+    <div
+      ref={shellRef}
+      onMouseMove={onMove}
+      className="relative min-h-screen overflow-hidden bg-[#0b0b12]"
+    >
       <Navbar />
 
       {/* Background layers (fairy + grid + cursor glow) */}
@@ -176,7 +180,10 @@ const AddNote = () => {
           <form onSubmit={submitForm} className="space-y-6">
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
               <div className="group relative">
-                <label htmlFor="title" className="mb-2 block text-sm font-medium text-white/80">
+                <label
+                  htmlFor="title"
+                  className="mb-2 block text-sm font-medium text-white/80"
+                >
                   Enter A Note Title
                 </label>
                 <input
@@ -189,11 +196,20 @@ const AddNote = () => {
                   value={title}
                   required
                 />
-                <span className="pointer-events-none absolute inset-0 -z-10 rounded-xl opacity-0 blur-2xl transition group-hover:opacity-40 group-hover:blur-3xl group-focus-within:opacity-60" style={{ background: "radial-gradient(120px_60px_at_20%_20%,rgba(139,92,246,.35),transparent)"}} />
+                <span
+                  className="pointer-events-none absolute inset-0 -z-10 rounded-xl opacity-0 blur-2xl transition group-hover:opacity-40 group-hover:blur-3xl group-focus-within:opacity-60"
+                  style={{
+                    background:
+                      "radial-gradient(120px_60px_at_20%_20%,rgba(139,92,246,.35),transparent)",
+                  }}
+                />
               </div>
 
               <div className="group relative">
-                <label htmlFor="description" className="mb-2 block text-sm font-medium text-white/80">
+                <label
+                  htmlFor="description"
+                  className="mb-2 block text-sm font-medium text-white/80"
+                >
                   Enter A Note Description
                 </label>
                 <textarea
@@ -205,13 +221,24 @@ const AddNote = () => {
                   value={desc}
                   required
                 />
-                <span className="pointer-events-none absolute inset-0 -z-10 rounded-xl opacity-0 blur-2xl transition group-hover:opacity-40 group-hover:blur-3xl group-focus-within:opacity-60" style={{ background: "radial-gradient(160px_90px_at_80%_30%,rgba(139,92,246,.35),transparent)"}} />
+                <span
+                  className="pointer-events-none absolute inset-0 -z-10 rounded-xl opacity-0 blur-2xl transition group-hover:opacity-40 group-hover:blur-3xl group-focus-within:opacity-60"
+                  style={{
+                    background:
+                      "radial-gradient(160px_90px_at_80%_30%,rgba(139,92,246,.35),transparent)",
+                  }}
+                />
               </div>
             </div>
 
             {/* Checkbox */}
             <div className="flex items-center gap-3 text-white">
-              <CheckBox title="Is Important" check={isImportant} setCheck={setIsImportant} className="!text-white font-semibold" />
+              <CheckBox
+                title="Is Important"
+                check={isImportant}
+                setCheck={setIsImportant}
+                className="!text-white font-semibold"
+              />
             </div>
 
             {/* Editor */}
@@ -292,8 +319,8 @@ const AddNote = () => {
             key={s.id}
             className="pointer-events-none absolute block h-1.5 w-1.5 animate-spark rounded-full bg-white/80 shadow-[0_0_14px_2px_rgba(168,85,247,0.45)]"
             style={{ left: s.x, top: s.y }}
-          />)
-        )}
+          />
+        ))}
       </div>
 
       {/* local styles */}
@@ -318,7 +345,6 @@ const AddNote = () => {
     </div>
   );
 };
-
 export default AddNote;
 
 
