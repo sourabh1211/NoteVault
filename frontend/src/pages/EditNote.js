@@ -94,6 +94,17 @@
 // };
 // export default EditNote;
 
+
+
+
+
+
+
+
+
+
+
+
 import React, { useState, useRef, useEffect } from "react";
 import JoditEditor from "jodit-react";
 import { motion } from "framer-motion";
@@ -104,12 +115,15 @@ import { useNavigate, useParams } from "react-router-dom";
 const EditNote = () => {
   let { id } = useParams();
   const editorRef = useRef(null);
+  const shellRef = useRef(null);
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [isImportant, setIsImportant] = useState(false);
+  const [sparks, setSparks] = useState([]); // cursor sprinkles
   let navigate = useNavigate();
 
+  // ===== Logic preserved: submit & fetch =====
   const submitForm = (e) => {
     e.preventDefault();
     fetch("https://notesapp-1-56xy.onrender.com/updateNote", {
@@ -157,17 +171,56 @@ const EditNote = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // ===== Cursor sprinkles & gradient focus =====
+  const onMove = (e) => {
+    const el = shellRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    el.style.setProperty("--mx", `${x}px`);
+    el.style.setProperty("--my", `${y}px`);
+
+    // sprinkle
+    const id = Math.random().toString(36).slice(2);
+    setSparks((prev) => {
+      const next = [...prev, { id, x, y }];
+      return next.length > 24 ? next.slice(next.length - 24) : next;
+    });
+    // auto-remove one older spark after a bit (keeps animation light)
+    setTimeout(() => {
+      setSparks((prev) => prev.filter((s) => s.id !== id));
+    }, 800);
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0b0b12] via-[#170f22] to-[#0b0b12]">
+    <div
+      ref={shellRef}
+      onMouseMove={onMove}
+      className="relative min-h-screen overflow-hidden bg-[#0b0b12]"
+    >
       <Navbar />
 
-      {/* ambient background grid + glows */}
-      <div className="pointer-events-none fixed inset-0 -z-10 opacity-40 [mask-image:radial-gradient(closest-side,black,transparent)]">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,#6b21a8_0%,transparent_35%),radial-gradient(circle_at_80%_20%,#4c1d95_0%,transparent_40%),radial-gradient(circle_at_50%_90%,#1e1b4b_0%,transparent_35%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(transparent,transparent),linear-gradient(#ffffff0a_1px,transparent_1px),linear-gradient(90deg,#ffffff0a_1px,transparent_1px)] bg-[length:100%_100%,24px_24px,24px_24px]" />
+      {/* Two‑color phased background layers */}
+      <div className="pointer-events-none absolute inset-0 -z-20">
+        {/* base gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0b0b12] via-[#170f22] to-[#0b0b12]" />
+        {/* animated conic overlay that phases two colors */}
+        <div className="absolute inset-0 bg-[conic-gradient(from_0deg_at_50%_50%,#6b21a8_0%,#1e1b4b_50%,#6b21a8_100%)] opacity-30 mix-blend-plus-lighter animate-bgPhase" />
+        {/* radial focus following cursor */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(200px 200px at var(--mx,50%) var(--my,50%), rgba(139,92,246,0.20), transparent 60%)",
+          }}
+        />
+        {/* fine grid */}
+        <div className="absolute inset-0 opacity-40 [mask-image:radial-gradient(closest-side,black,transparent)] bg-[linear-gradient(#ffffff12_1px,transparent_1px),linear-gradient(90deg,#ffffff12_1px,transparent_1px)] bg-[size:24px_24px]" />
       </div>
 
-      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-10">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 py-6 sm:py-10">
+        {/* glass shell */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -178,7 +231,6 @@ const EditNote = () => {
             <h3 className="text-2xl font-bold tracking-tight text-white drop-shadow-sm sm:text-3xl">
               Edit Note
             </h3>
-
             <motion.button
               whileHover={{ y: -2, scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -191,26 +243,31 @@ const EditNote = () => {
 
           <form onSubmit={submitForm} className="space-y-6">
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-              <div className="group relative">
+              <motion.div
+                whileFocus={{ scale: 1.01 }}
+                className="group relative"
+              >
                 <label htmlFor="title" className="mb-2 block text-sm font-medium text-white/80">
                   Enter a Note Title
                 </label>
                 <input
                   type="text"
                   placeholder="Note Title"
-                  className="w-full rounded-xl border border-white/15 bg-white/5 p-3 text-white placeholder-white/50 outline-none transition focus:border-violet-400/60 focus:ring-2 focus:ring-violet-500/40"
+                  className="peer w-full rounded-xl border border-white/15 bg-white/5 p-3 text-white placeholder-white/50 outline-none transition focus:border-violet-400/60 focus:ring-2 focus:ring-violet-500/40"
                   name="title"
                   id="title"
-                  onChange={(e) => {
-                    setTitle(e.target.value);
-                  }}
+                  onChange={(e) => setTitle(e.target.value)}
                   value={title}
                   required
                 />
-                <span className="pointer-events-none absolute inset-0 -z-10 rounded-xl opacity-0 blur-2xl transition group-hover:opacity-40 group-hover:blur-3xl group-focus-within:opacity-60" style={{ background: "radial-gradient(120px_60px_at_20%_20%,rgba(139,92,246,.35),transparent)"}} />
-              </div>
+                {/* hover glow */}
+                <span
+                  className="pointer-events-none absolute inset-0 -z-10 rounded-xl opacity-0 blur-2xl transition group-hover:opacity-40 group-hover:blur-3xl group-focus-within:opacity-60"
+                  style={{ background: "radial-gradient(120px_60px_at_20%_20%,rgba(139,92,246,.35),transparent)" }}
+                />
+              </motion.div>
 
-              <div className="group relative">
+              <motion.div whileFocus={{ scale: 1.01 }} className="group relative">
                 <label htmlFor="description" className="mb-2 block text-sm font-medium text-white/80">
                   Enter a Note Description
                 </label>
@@ -219,18 +276,20 @@ const EditNote = () => {
                   className="min-h-[100px] w-full rounded-xl border border-white/15 bg-white/5 p-3 text-white placeholder-white/50 outline-none transition focus:border-violet-400/60 focus:ring-2 focus:ring-violet-500/40"
                   name="description"
                   id="description"
-                  onChange={(e) => {
-                    setDesc(e.target.value);
-                  }}
+                  onChange={(e) => setDesc(e.target.value)}
                   value={desc}
                   required
                 />
-                <span className="pointer-events-none absolute inset-0 -z-10 rounded-xl opacity-0 blur-2xl transition group-hover:opacity-40 group-hover:blur-3xl group-focus-within:opacity-60" style={{ background: "radial-gradient(160px_90px_at_80%_30%,rgba(139,92,246,.35),transparent)"}} />
-              </div>
+                <span
+                  className="pointer-events-none absolute inset-0 -z-10 rounded-xl opacity-0 blur-2xl transition group-hover:opacity-40 group-hover:blur-3xl group-focus-within:opacity-60"
+                  style={{ background: "radial-gradient(160px_90px_at_80%_30%,rgba(139,92,246,.35),transparent)" }}
+                />
+              </motion.div>
             </div>
 
+            {/* Checkbox: visible white label */}
             <div className="flex items-center gap-3">
-              <CheckBox title=\"Is Important\" check={isImportant} setCheck={setIsImportant} className=\"text-white\" />
+              <CheckBox title="Is Important" check={isImportant} setCheck={setIsImportant} className="text-white" />
             </div>
 
             {/* Editor Card */}
@@ -259,7 +318,7 @@ const EditNote = () => {
                 type="submit"
                 className="group relative inline-flex min-w-[200px] items-center justify-center overflow-hidden rounded-xl bg-gradient-to-r from-violet-700 via-fuchsia-600 to-violet-700 p-[2px]"
               >
-                <span className="absolute inset-0 animate-pulse bg-[radial-gradient(120px_60px_at_var(--x,50%)_0%,rgba(255,255,255,0.08),transparent)] opacity-0 transition-opacity group-hover:opacity-100" />
+                <span className="absolute inset-0 animate-pulse bg-[radial-gradient(120px_60px_at_var(--mx,50%)_0%,rgba(255,255,255,0.08),transparent)] opacity-0 transition-opacity group-hover:opacity-100" />
                 <span className="relative block w-full rounded-[10px] bg-[#0f0b17]/90 px-5 py-3 text-center font-semibold text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] backdrop-blur">
                   Update Note
                 </span>
@@ -279,8 +338,8 @@ const EditNote = () => {
         </motion.div>
       </div>
 
-      {/* floating particles */}
-      <div className="pointer-events-none fixed inset-0 -z-10">
+      {/* floating particles background */}
+      <div className="pointer-events-none absolute inset-0 -z-10">
         {[...Array(16)].map((_, i) => (
           <motion.span
             key={i}
@@ -293,41 +352,33 @@ const EditNote = () => {
         ))}
       </div>
 
-      {/* local styles for Jodit to match theme */}
+      {/* cursor sprinkles (follow the mouse) */}
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        {sparks.map((s) => (
+          <span
+            key={s.id}
+            className="pointer-events-none absolute block h-1.5 w-1.5 animate-spark rounded-full bg-white/80 shadow-[0_0_14px_2px_rgba(168,85,247,0.45)]"
+            style={{ left: s.x, top: s.y }}
+          />)
+        )}
+      </div>
+
+      {/* local styles for Jodit to match theme + keyframes */}
       <style>{`
-        .jodit-wrapper .jodit-container {
-          background: transparent !important;
-          color: #fff !important;
-          border: none !important;
-        }
-        .jodit-wrapper .jodit-toolbar__box,
-        .jodit-wrapper .jodit-status-bar {
-          background: rgba(255,255,255,0.05) !important;
-          backdrop-filter: blur(10px);
-          border: 1px solid rgba(255,255,255,0.08) !important;
-        }
-        .jodit-wrapper .jodit-toolbar__box:not(:empty){
-          border-bottom: 1px solid rgba(255,255,255,0.08) !important;
-        }
-        .jodit-wrapper .jodit-toolbar-button__button {
-          color: rgba(255,255,255,0.85) !important;
-        }
-        .jodit-wrapper .jodit-toolbar-button__button:hover {
-          background: rgba(139,92,246,0.18) !important;
-        }
-        .jodit-wrapper .jodit-wysiwyg, .jodit-wrapper .jodit-workplace {
-          background: transparent !important;
-          color: #fff !important;
-        }
-        .jodit-wrapper .jodit-ui-separator {
-          background: rgba(255,255,255,0.12) !important;
-        }
-        .jodit-wrapper .jodit-add-new-line {
-          background: rgba(255,255,255,0.05) !important;
-        }
-        .jodit-wrapper .jodit-toolbar-editor-collection_mode_fullsize{ 
-          background: rgba(15,11,23,0.9) !important;
-        }
+        @keyframes bgPhase { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
+        .animate-bgPhase{ animation:bgPhase 30s linear infinite; }
+        @keyframes spark { 0%{ transform:translate(-50%,-50%) scale(1); opacity:1;} 100%{ transform:translate(-50%,-80%) scale(0.2); opacity:0;} }
+        .animate-spark{ animation: spark .8s ease-out forwards; }
+
+        .jodit-wrapper .jodit-container { background: transparent !important; color: #fff !important; border: none !important; }
+        .jodit-wrapper .jodit-toolbar__box, .jodit-wrapper .jodit-status-bar { background: rgba(255,255,255,0.05) !important; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.08) !important; }
+        .jodit-wrapper .jodit-toolbar__box:not(:empty){ border-bottom: 1px solid rgba(255,255,255,0.08) !important; }
+        .jodit-wrapper .jodit-toolbar-button__button { color: rgba(255,255,255,0.85) !important; }
+        .jodit-wrapper .jodit-toolbar-button__button:hover { background: rgba(139,92,246,0.18) !important; }
+        .jodit-wrapper .jodit-wysiwyg, .jodit-wrapper .jodit-workplace { background: transparent !important; color: #fff !important; }
+        .jodit-wrapper .jodit-ui-separator { background: rgba(255,255,255,0.12) !important; }
+        .jodit-wrapper .jodit-add-new-line { background: rgba(255,255,255,0.05) !important; }
+        .jodit-wrapper .jodit-toolbar-editor-collection_mode_fullsize{ background: rgba(15,11,23,0.9) !important; }
       `}</style>
     </div>
   );
