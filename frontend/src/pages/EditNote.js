@@ -230,7 +230,7 @@ const EditNote = () => {
             </div>
 
             <div className="flex items-center gap-3">
-              <CheckBox title="" check={isImportant} setCheck={setIsImportant} />
+              <CheckBox title=\"Is Important\" check={isImportant} setCheck={setIsImportant} className=\"text-white\" />
             </div>
 
             {/* Editor Card */}
