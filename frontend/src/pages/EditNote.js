@@ -123,7 +123,6 @@ const EditNote = () => {
   const [sparks, setSparks] = useState([]); // cursor sprinkles
   let navigate = useNavigate();
 
-  // ===== Logic preserved: submit & fetch =====
   const submitForm = (e) => {
     e.preventDefault();
     fetch("https://notesapp-1-56xy.onrender.com/updateNote", {
@@ -168,10 +167,8 @@ const EditNote = () => {
 
   useEffect(() => {
     getNote();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // ===== Cursor sprinkles & gradient focus =====
   const onMove = (e) => {
     const el = shellRef.current;
     if (!el) return;
@@ -181,13 +178,11 @@ const EditNote = () => {
     el.style.setProperty("--mx", `${x}px`);
     el.style.setProperty("--my", `${y}px`);
 
-    // sprinkle
     const id = Math.random().toString(36).slice(2);
     setSparks((prev) => {
       const next = [...prev, { id, x, y }];
       return next.length > 24 ? next.slice(next.length - 24) : next;
     });
-    // auto-remove one older spark after a bit (keeps animation light)
     setTimeout(() => {
       setSparks((prev) => prev.filter((s) => s.id !== id));
     }, 800);
@@ -201,13 +196,10 @@ const EditNote = () => {
     >
       <Navbar />
 
-      {/* Two‑color phased background layers */}
+      {/* Background */}
       <div className="pointer-events-none absolute inset-0 -z-20">
-        {/* base gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#0b0b12] via-[#170f22] to-[#0b0b12]" />
-        {/* animated conic overlay that phases two colors */}
         <div className="absolute inset-0 bg-[conic-gradient(from_0deg_at_50%_50%,#6b21a8_0%,#1e1b4b_50%,#6b21a8_100%)] opacity-30 mix-blend-plus-lighter animate-bgPhase" />
-        {/* radial focus following cursor */}
         <div
           className="absolute inset-0"
           style={{
@@ -215,12 +207,10 @@ const EditNote = () => {
               "radial-gradient(200px 200px at var(--mx,50%) var(--my,50%), rgba(139,92,246,0.20), transparent 60%)",
           }}
         />
-        {/* fine grid */}
         <div className="absolute inset-0 opacity-40 [mask-image:radial-gradient(closest-side,black,transparent)] bg-[linear-gradient(#ffffff12_1px,transparent_1px),linear-gradient(90deg,#ffffff12_1px,transparent_1px)] bg-[size:24px_24px]" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-6xl px-4 py-6 sm:py-10">
-        {/* glass shell */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -243,10 +233,7 @@ const EditNote = () => {
 
           <form onSubmit={submitForm} className="space-y-6">
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-              <motion.div
-                whileFocus={{ scale: 1.01 }}
-                className="group relative"
-              >
+              <motion.div className="group relative">
                 <label htmlFor="title" className="mb-2 block text-sm font-medium text-white/80">
                   Enter a Note Title
                 </label>
@@ -260,14 +247,9 @@ const EditNote = () => {
                   value={title}
                   required
                 />
-                {/* hover glow */}
-                <span
-                  className="pointer-events-none absolute inset-0 -z-10 rounded-xl opacity-0 blur-2xl transition group-hover:opacity-40 group-hover:blur-3xl group-focus-within:opacity-60"
-                  style={{ background: "radial-gradient(120px_60px_at_20%_20%,rgba(139,92,246,.35),transparent)" }}
-                />
               </motion.div>
 
-              <motion.div whileFocus={{ scale: 1.01 }} className="group relative">
+              <motion.div className="group relative">
                 <label htmlFor="description" className="mb-2 block text-sm font-medium text-white/80">
                   Enter a Note Description
                 </label>
@@ -280,19 +262,15 @@ const EditNote = () => {
                   value={desc}
                   required
                 />
-                <span
-                  className="pointer-events-none absolute inset-0 -z-10 rounded-xl opacity-0 blur-2xl transition group-hover:opacity-40 group-hover:blur-3xl group-focus-within:opacity-60"
-                  style={{ background: "radial-gradient(160px_90px_at_80%_30%,rgba(139,92,246,.35),transparent)" }}
-                />
               </motion.div>
             </div>
 
-            {/* Checkbox: visible white label */}
-            <div className="flex items-center gap-3">
-              <CheckBox title=\"Is Important\" check={isImportant} setCheck={setIsImportant} className=\"text-white font-medium\" />
+            {/* Checkbox */}
+            <div className="flex items-center gap-3 text-white">
+              <CheckBox title="Is Important" check={isImportant} setCheck={setIsImportant} className="!text-white font-semibold" />
             </div>
 
-            {/* Editor Card */}
+            {/* Editor */}
             <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0f0b17]/60 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] backdrop-blur">
               <div className="flex items-center justify-between border-b border-white/10 px-4 py-2">
                 <div className="flex items-center gap-2 text-white/80">
@@ -338,7 +316,7 @@ const EditNote = () => {
         </motion.div>
       </div>
 
-      {/* floating particles background */}
+      {/* floating particles */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         {[...Array(16)].map((_, i) => (
           <motion.span
@@ -352,7 +330,18 @@ const EditNote = () => {
         ))}
       </div>
 
-      {/* cursor sprinkles (follow the mouse) */}
+      {/* fairy orbs */}
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        {[...Array(6)].map((_, i) => (
+          <span
+            key={`orb-${i}`}
+            className="absolute h-28 w-28 rounded-full blur-2xl opacity-25 bg-fuchsia-500/30 animate-fairy"
+            style={{ left: `${(i * 17) % 100}%`, top: `${(i * 23) % 100}%` }}
+          />
+        ))}
+      </div>
+
+      {/* cursor sparks */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         {sparks.map((s) => (
           <span
@@ -363,12 +352,13 @@ const EditNote = () => {
         )}
       </div>
 
-      {/* local styles for Jodit to match theme + keyframes */}
       <style>{`
         @keyframes bgPhase { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
         .animate-bgPhase{ animation:bgPhase 30s linear infinite; }
         @keyframes spark { 0%{ transform:translate(-50%,-50%) scale(1); opacity:1;} 100%{ transform:translate(-50%,-80%) scale(0.2); opacity:0;} }
         .animate-spark{ animation: spark .8s ease-out forwards; }
+        @keyframes fairy { 0%{ transform:translate3d(0,0,0) scale(1);} 50%{ transform:translate3d(12px,-18px,0) scale(1.05);} 100%{ transform:translate3d(0,0,0) scale(1);} }
+        .animate-fairy{ animation: fairy 12s ease-in-out infinite; }
 
         .jodit-wrapper .jodit-container { background: transparent !important; color: #fff !important; border: none !important; }
         .jodit-wrapper .jodit-toolbar__box, .jodit-wrapper .jodit-status-bar { background: rgba(255,255,255,0.05) !important; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.08) !important; }
