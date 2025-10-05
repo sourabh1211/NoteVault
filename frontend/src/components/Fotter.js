@@ -2,6 +2,7 @@ import React from "react";
 import LinkedinImg from "../Images/linkedin.png";
 import InstagramImg from "../Images/instagram.png";
 import Mailimg from "../Images/gmail.png";
+
 const Footer = () => {
   return (
     <footer className="w-full bg-gradient-to-r from-blue-900 to-blue-700 text-white py-6 px-10 flex items-center justify-between shadow-lg">
@@ -44,4 +45,5 @@ const Footer = () => {
     </footer>
   );
 };
+
 export default Footer;
